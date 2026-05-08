@@ -1,0 +1,24 @@
+﻿,,,,,,
+Day of Week ,Date ,Person ,Hours Worked ,Tasks completed ,Hourly Rate ,Compensation 
+,,,,,,
+Thursday,2/13/2026,Brock,1,Project #5 Selection,$20.00,$20.00
+Thursday,2/20/2026,Owen,1,Review Client Prompt & Locate Data,$22.50,$22.50
+Thursday,2/27/2026,Brock,2,Draft Scope of Work,$20.00,$40.00
+Thursday,3/6/2026,Mehgan,2.5,Draft Gantt Chart,$21.50,$53.75
+Thursday,3/13/2026,Fatima,3,Flow Diagram,$25.50,$76.50
+Thursday,3/27/2026,Owen,2.5,Draft Reproducible Methods,$22.50,$56.25
+Thursday,4/3/2026,Fatima,4,Initial Results,$25.50,$102.00
+Thursday,4/17/2026,Mehgan,1.5,TA Check In,$21.50,$32.25
+Friday,5/1/2026,Fatima,2,"Complete anaylsis on state: Nebraska, Tennessee, California, and Connecticut. Created annotated code document.",$25.50,$51.00
+Friday,5/2/2026,Owen,1,Write technical and non-technical executive summaries using a graph that showcases all the states that were analyzed.,$22.50,$22.50
+Wednesday,5/5/2026,Brock,2,Complete analysis on Arkansas and update annotated code document. Start the report by writing introduction. ,$20.00,$40.00
+Thursday,5/6/2026,Mehgan,1,Write the methods sections and write results section.,$21.50,$21.50
+PERSON,TOTAL HOURS,,,,,
+,,,,,,
+BROCK,2,,,,,
+FATIMA,7,,,,,
+MEHGAN,4,,,,,
+OWEN,3.5,,,,,
+,,,,,,
+TOTAL HOURS:,23.5,,,,,
+TOTAL COMPENSATION:,$538.25,,,,,
