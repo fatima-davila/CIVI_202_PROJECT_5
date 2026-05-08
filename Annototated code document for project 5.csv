@@ -1,0 +1,111 @@
+﻿#,Notebook Cell,Line,Code line,explanation
+1,2,2,%pip install plotly,Installs the Plotly package in the notebook environment so interactive Plotly graphs can be created.
+2,3,2,import pandas as pd,"Imports pandas and gives it the short name pd, which is used to read, clean, filter, and organize tabular data."
+3,3,3,import numpy as np,"Imports NumPy as np, which is commonly used for numerical calculations and missing-value handling."
+4,3,4,import matplotlib.pyplot as plt,Imports Matplotlib's plotting tools as plt so regular Python graphs can be created.
+5,3,5,import seaborn as sns,"Imports Seaborn as sns, which is used to make statistical plots and set nicer graph styles."
+6,3,7,import plotly.graph_objects as go,"Imports Plotly graph objects as go, which is used to build interactive figures one trace at a time."
+7,3,8,import plotly.express as px,"Imports Plotly Express as px, a shortcut library for making Plotly charts quickly."
+8,3,12,import plotly.io as pio,"Imports Plotly's input/output settings module as pio, used here to control how plots display in Jupyter."
+9,4,2,sns.set_style('whitegrid'),"Sets Seaborn graphs to use a white background with grid lines, making charts easier to read."
+10,4,3,sns.set_palette('deep'),Sets Seaborn's default color palette to 'deep' for future Seaborn plots.
+11,5,2,TLC_data = pd.read_csv('EPA_TCL_Violations (1).csv'),Reads the EPA TCL violations CSV file into a pandas DataFrame named TLC_data.
+12,7,2,def small_system():,Starts a function named small_system that will return rows for smaller water systems.
+13,7,3,small_system = TLC_data[TLC_data['Population Served Count'] < 500],Filters TLC_data to keep only smaller systems with Population Served Count < 500.
+14,7,4,return small_system,Sends the filtered small-system DataFrame back as the function's output.
+15,7,7,def large_system():,Starts a function named large_system that will return rows for larger water systems.
+16,7,8,large_system = TLC_data[TLC_data['Population Served Count'] > 500],Filters TLC_data to keep only larger systems with Population Served Count > 500.
+17,7,9,return large_system,Sends the filtered large-system DataFrame back as the function's output.
+18,9,3,pio.renderers.default = 'notebook',Makes Plotly display interactive figures directly inside the Jupyter notebook.
+19,9,7,TLC_data['Population Served Count'] = pd.to_numeric(,Starts converting the 'Population Served Count' column into numeric values so it can be compared and graphed.
+20,9,8,"TLC_data['Population Served Count'], errors='coerce'",Identifies the population column to convert; errors='coerce' changes invalid values into NaN instead of stopping the code.
+21,9,9,),Closes the previous multi-line function call or plot command.
+22,9,11,TLC_data['Compliance Period Begin Date'] = pd.to_datetime(,Starts converting the compliance begin date column into datetime format so the year can be extracted.
+23,9,12,"TLC_data['Compliance Period Begin Date'], errors='coerce'",Identifies the date column to convert; errors='coerce' changes invalid dates into NaT instead of stopping the code.
+24,9,15,TLC_data['Year'] = TLC_data['Compliance Period Begin Date'].dt.year,Creates a new Year column by extracting only the year from the compliance begin date.
+25,9,18,"TLC_data = TLC_data.dropna(subset=['Population Served Count', 'Year'])",Removes rows where population count or year is missing so the analysis does not graph incomplete records.
+26,9,23,fig = go.Figure(),Creates a blank Plotly figure that traces and layout settings can be added to.
+27,9,25,fig.add_trace(go.Histogram(,Starts adding a histogram trace to the Plotly figure. A histogram counts how many records fall into each year/bin.
+28,9,26,"x=small_system['Year'],","Sets the histogram's x-values to small_system['Year'], so the graph groups/counts records by those years."
+29,9,27,"nbinsx=10,","Sets the approximate number of bins on the x-axis to 10, controlling how the years are grouped."
+30,9,28,"name='Small system (<500)',",Names this data series 'Small system (<500)' so it appears correctly in the legend.
+31,9,29,"marker_color='powderblue',",Sets the Plotly bar color for this histogram trace to powderblue.
+32,9,30,opacity=0.6,Changes the transparency of the Plotly histogram bars to 0.6 so overlapping bars are easier to see. It does not define a new variable.
+33,9,31,)),"Closes the nested multi-line plot command, such as a trace being added to a figure."
+34,9,34,"x=big_system['Year'],","Sets the histogram's x-values to big_system['Year'], so the graph groups/counts records by those years."
+35,9,36,"name='Big system (>500)',",Names this data series 'Big system (>500)' so it appears correctly in the legend.
+36,9,37,"marker_color='violet',",Sets the Plotly bar color for this histogram trace to violet.
+37,9,41,fig.update_layout(,"Starts changing the overall Plotly chart layout, such as the title, axis labels, theme, and bar overlap style."
+38,9,42,"title='Distribution of all our states total TLC Violations by Year',",Sets the Plotly graph title displayed above the chart.
+39,9,43,"xaxis_title='Year',",Labels the Plotly x-axis as 'Year'.
+40,9,44,"yaxis_title='Frequency',",Labels the Plotly y-axis as 'Frequency'.
+41,9,45,"barmode='overlay',",Sets how multiple bars are displayed. 'overlay' places the histograms on top of each other instead of side by side.
+42,9,46,template='plotly_white',Applies the Plotly visual theme 'plotly_white' to control the chart's background and default styling.
+43,9,49,fig.show(),Displays the completed Plotly figure in the notebook.
+44,10,4,TLC_data = TLC_data[TLC_data['Primacy Agency Code'] == 'NE'],Filters TLC_data so it only keeps rows for state/agency code NE. This overwrites TLC_data with the filtered data.
+45,10,20,"plt.figure(figsize=(10, 6))",Creates a Matplotlib figure that is 10 inches wide and 6 inches tall.
+46,10,24,"plt.hist(small_system['Year'], bins=10, color='violet', edgecolor='magenta',","Starts drawing a Matplotlib histogram for one group of systems, using year values as the data being counted."
+47,10,25,"alpha=0.5, label='Small system (<500)')",Sets the transparency/opacity of the Matplotlib histogram bars so overlapping groups can be seen more clearly. It does not define a new variable.
+48,10,27,"plt.hist(big_system['Year'], bins=10, color='red', edgecolor='magenta',","Starts drawing a Matplotlib histogram for one group of systems, using year values as the data being counted."
+49,10,28,"alpha=0.5, label='Big system (>500)')",Sets the transparency/opacity of the Matplotlib histogram bars so overlapping groups can be seen more clearly. It does not define a new variable.
+50,10,30,plt.xlabel('Year'),Labels the x-axis of the Matplotlib graph as Year.
+51,10,31,plt.ylabel('Frequency'),Labels the y-axis of the Matplotlib graph as Frequency.
+52,10,32,plt.title('Distribution of Nebraska Systems by Year'),Adds the title 'Distribution of Nebraska Systems by Year' to the Matplotlib graph.
+53,10,33,plt.legend(),Shows the legend so the small-system and big-system groups can be identified.
+54,10,34,plt.tight_layout(),"Adjusts spacing so labels, titles, and plot elements fit neatly without overlapping."
+55,10,35,plt.show(),Displays the Matplotlib graph in the notebook.
+56,11,5,CA_data = TLC_data[TLC_data['Primacy Agency Code'] == 'CA'].copy(),"Creates a separate DataFrame for state/agency code CA by filtering TLC_data, then uses .copy() to avoid changing the original data by accident."
+57,11,8,CA_data['Population Served Count'] = pd.to_numeric(,Starts converting the 'Population Served Count' column into numeric values so it can be compared and graphed.
+58,11,9,"CA_data['Population Served Count'], errors='coerce'",Identifies the population column to convert; errors='coerce' changes invalid values into NaN instead of stopping the code.
+59,11,12,CA_data['Compliance Period Begin Date'] = pd.to_datetime(,Starts converting the compliance begin date column into datetime format so the year can be extracted.
+60,11,13,"CA_data['Compliance Period Begin Date'], errors='coerce'",Identifies the date column to convert; errors='coerce' changes invalid dates into NaT instead of stopping the code.
+61,11,16,CA_data['Year'] = CA_data['Compliance Period Begin Date'].dt.year,Creates a new Year column by extracting only the year from the compliance begin date.
+62,11,19,"CA_data = CA_data.dropna(subset=['Population Served Count', 'Year'])",Removes rows where population count or year is missing so the analysis does not graph incomplete records.
+63,11,22,CA_data['Year'] = CA_data['Year'].astype(int),Converts the Year column to whole numbers so the x-axis shows clean years instead of decimals.
+64,11,25,small_system_data = CA_data[CA_data['Population Served Count'] < 500],Filters CA_data to keep only smaller systems with Population Served Count < 500.
+65,11,26,big_system_data = CA_data[CA_data['Population Served Count'] > 500],Filters CA_data to keep only larger systems with Population Served Count > 500.
+66,11,32,"x=small_system_data['Year'],","Sets the histogram's x-values to small_system_data['Year'], so the graph groups/counts records by those years."
+67,11,33,xbins=dict(,Starts manually defining the histogram bin settings for the x-axis.
+68,11,34,"start=1985,",Sets the first histogram bin to start at year 1985.
+69,11,35,"end=2028,",Sets the histogram bin range to end at year 2028.
+70,11,36,size=5,Sets each histogram bin width to 5 years.
+71,11,37,"),",Closes this nested setting inside a larger multi-line Plotly layout or axis command.
+72,11,44,"x=big_system_data['Year'],","Sets the histogram's x-values to big_system_data['Year'], so the graph groups/counts records by those years."
+73,11,56,"title='Distribution of California Systems by Year',",Sets the Plotly graph title displayed above the chart.
+74,11,60,"template='plotly_white',",Applies the Plotly visual theme 'plotly_white' to control the chart's background and default styling.
+75,11,61,xaxis=dict(,Starts customizing the x-axis settings for the Plotly graph.
+76,11,62,"range=[1985, 2028],",Sets the visible x-axis range from 1985 to 2028.
+77,11,63,"tickmode='linear',",Makes x-axis tick marks follow a regular linear pattern.
+78,11,64,"tick0=1985,",Sets the first x-axis tick mark at 1985.
+79,11,65,"dtick=5,",Sets the distance between x-axis tick marks to 5 years.
+80,11,66,tickformat='d',Formats year tick labels as whole numbers with no decimal places.
+81,12,3,TN_data = TLC_data[TLC_data['Primacy Agency Code'] == 'TN'].copy(),"Creates a separate DataFrame for state/agency code TN by filtering TLC_data, then uses .copy() to avoid changing the original data by accident."
+82,12,6,TN_data['Population Served Count'] = pd.to_numeric(,Starts converting the 'Population Served Count' column into numeric values so it can be compared and graphed.
+83,12,7,"TN_data['Population Served Count'], errors='coerce'",Identifies the population column to convert; errors='coerce' changes invalid values into NaN instead of stopping the code.
+84,12,10,TN_data['Compliance Period Begin Date'] = pd.to_datetime(,Starts converting the compliance begin date column into datetime format so the year can be extracted.
+85,12,11,"TN_data['Compliance Period Begin Date'], errors='coerce'",Identifies the date column to convert; errors='coerce' changes invalid dates into NaT instead of stopping the code.
+86,12,14,TN_data['Year'] = TN_data['Compliance Period Begin Date'].dt.year,Creates a new Year column by extracting only the year from the compliance begin date.
+87,12,17,"TN_data = TN_data.dropna(subset=['Population Served Count', 'Year'])",Removes rows where population count or year is missing so the analysis does not graph incomplete records.
+88,12,20,TN_data['Year'] = TN_data['Year'].astype(int),Converts the Year column to whole numbers so the x-axis shows clean years instead of decimals.
+89,12,23,small_system_data = TN_data[TN_data['Population Served Count'] < 500],Filters TN_data to keep only smaller systems with Population Served Count < 500.
+90,12,24,big_system_data = TN_data[TN_data['Population Served Count'] > 500],Filters TN_data to keep only larger systems with Population Served Count > 500.
+91,12,54,"title='Distribution of Tennessee Systems by Year',",Sets the Plotly graph title displayed above the chart.
+92,13,3,CT_data = TLC_data[TLC_data['Primacy Agency Code'] == 'CT'].copy(),"Creates a separate DataFrame for state/agency code CT by filtering TLC_data, then uses .copy() to avoid changing the original data by accident."
+93,13,6,CT_data['Population Served Count'] = pd.to_numeric(,Starts converting the 'Population Served Count' column into numeric values so it can be compared and graphed.
+94,13,7,"CT_data['Population Served Count'], errors='coerce'",Identifies the population column to convert; errors='coerce' changes invalid values into NaN instead of stopping the code.
+95,13,10,CT_data['Compliance Period Begin Date'] = pd.to_datetime(,Starts converting the compliance begin date column into datetime format so the year can be extracted.
+96,13,11,"CT_data['Compliance Period Begin Date'], errors='coerce'",Identifies the date column to convert; errors='coerce' changes invalid dates into NaT instead of stopping the code.
+97,13,14,CT_data['Year'] = CT_data['Compliance Period Begin Date'].dt.year,Creates a new Year column by extracting only the year from the compliance begin date.
+98,13,17,"CT_data = CT_data.dropna(subset=['Population Served Count', 'Year'])",Removes rows where population count or year is missing so the analysis does not graph incomplete records.
+99,13,20,CT_data['Year'] = CT_data['Year'].astype(int),Converts the Year column to whole numbers so the x-axis shows clean years instead of decimals.
+100,13,23,small_system_data = CT_data[CT_data['Population Served Count'] < 200],Filters CT_data to keep only smaller systems with Population Served Count < 200.
+101,13,24,big_system_data = CT_data[CT_data['Population Served Count'] > 200],Filters CT_data to keep only larger systems with Population Served Count > 200.
+102,13,48,"name='Big system (>200)',",Names this data series 'Big system (>200)' so it appears correctly in the legend.
+103,13,54,"title='Distribution of Connecticut Systems by Year',",Sets the Plotly graph title displayed above the chart.
+104,14,3,state_code = 'LA',Stores Louisiana's state/agency code in a variable so it can be used to filter the data.
+105,14,4,state_name = 'Louisiana',Stores the full state name so it can be inserted into the graph title.
+106,14,20,state_data = TLC_data[TLC_data['Primacy Agency Code'] == state_code].copy(),Creates a DataFrame for the selected state by filtering rows where the agency code matches state_code. The .copy() helps prevent unwanted changes to TLC_data.
+107,14,23,"state_data = state_data.dropna(subset=['Population Served Count', 'Year'])","Removes rows from the selected state's data if population count or year is missing, so the graph uses complete records."
+108,14,27,small_system_data = state_data[state_data['Population Served Count'] < 500],Filters state_data to keep only smaller systems with Population Served Count < 500.
+109,14,28,big_system_data = state_data[state_data['Population Served Count'] > 500],Filters state_data to keep only larger systems with Population Served Count > 500.
+110,14,51,"title=f'Distribution of {state_name} Systems by Year',",Sets the Plotly graph title displayed above the chart.
