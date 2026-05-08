@@ -37,6 +37,7 @@ Key analyses:
    -  Seaborn
    -  Plotly
 5) Open Jupyter Notebook and run all cells
+   - If any issues occur with data not displaying, rerun the pd.read_csv cell and then run the data      for the selected state
 
 ## Deliverables
 * Cleaned dataset
