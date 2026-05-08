@@ -7,7 +7,7 @@ Key analyses:
 * An investigation about whether large water systems have more TCR violations than smaller systems
 
 ## Data Source
-* Safe Drinking Water Information System database:
+* Safe Drinking Water Information System Violation Reports: https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/sdwis_fed_reports_public/1
 
 ## Project Workflow
 1) Download Safe Drinking Water Information System database
