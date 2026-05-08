@@ -1,12 +1,10 @@
 ﻿#,Notebook Cell,Line,Code line,explanation
 1,2,2,%pip install plotly,Installs the Plotly package in the notebook environment so interactive Plotly graphs can be created.
 2,3,2,import pandas as pd,"Imports pandas and gives it the short name pd, which is used to read, clean, filter, and organize tabular data."
-3,3,3,import numpy as np,"Imports NumPy as np, which is commonly used for numerical calculations and missing-value handling."
-4,3,4,import matplotlib.pyplot as plt,Imports Matplotlib's plotting tools as plt so regular Python graphs can be created.
-5,3,5,import seaborn as sns,"Imports Seaborn as sns, which is used to make statistical plots and set nicer graph styles."
-6,3,7,import plotly.graph_objects as go,"Imports Plotly graph objects as go, which is used to build interactive figures one trace at a time."
-7,3,8,import plotly.express as px,"Imports Plotly Express as px, a shortcut library for making Plotly charts quickly."
-8,3,12,import plotly.io as pio,"Imports Plotly's input/output settings module as pio, used here to control how plots display in Jupyter."
+5,3,3,import seaborn as sns,"Imports Seaborn as sns, which is used to make statistical plots and set nicer graph styles."
+6,3,5,import plotly.graph_objects as go,"Imports Plotly graph objects as go, which is used to build interactive figures one trace at a time."
+7,3,6,import plotly.express as px,"Imports Plotly Express as px, a shortcut library for making Plotly charts quickly."
+8,3,7,import plotly.io as pio,"Imports Plotly's input/output settings module as pio, used here to control how plots display in Jupyter."
 9,4,2,sns.set_style('whitegrid'),"Sets Seaborn graphs to use a white background with grid lines, making charts easier to read."
 10,4,3,sns.set_palette('deep'),Sets Seaborn's default color palette to 'deep' for future Seaborn plots.
 11,5,2,TLC_data = pd.read_csv('EPA_TCL_Violations (1).csv'),Reads the EPA TCL violations CSV file into a pandas DataFrame named TLC_data.
@@ -42,7 +40,7 @@
 41,9,45,"barmode='overlay',",Sets how multiple bars are displayed. 'overlay' places the histograms on top of each other instead of side by side.
 42,9,46,template='plotly_white',Applies the Plotly visual theme 'plotly_white' to control the chart's background and default styling.
 43,9,49,fig.show(),Displays the completed Plotly figure in the notebook.
-44,10,4,TLC_data = TLC_data[TLC_data['Primacy Agency Code'] == 'NE'],Filters TLC_data so it only keeps rows for state/agency code NE. This overwrites TLC_data with the filtered data.
+44,10,4,NE_data = TLC_data[TLC_data['Primacy Agency Code'] == 'NE'],Filters TLC_data so it only keeps rows for state/agency code NE. This overwrites TLC_data with the filtered data.
 45,10,20,"plt.figure(figsize=(10, 6))",Creates a Matplotlib figure that is 10 inches wide and 6 inches tall.
 46,10,24,"plt.hist(small_system['Year'], bins=10, color='violet', edgecolor='magenta',","Starts drawing a Matplotlib histogram for one group of systems, using year values as the data being counted."
 47,10,25,"alpha=0.5, label='Small system (<500)')",Sets the transparency/opacity of the Matplotlib histogram bars so overlapping groups can be seen more clearly. It does not define a new variable.
@@ -102,8 +100,8 @@
 101,13,24,big_system_data = CT_data[CT_data['Population Served Count'] > 200],Filters CT_data to keep only larger systems with Population Served Count > 200.
 102,13,48,"name='Big system (>200)',",Names this data series 'Big system (>200)' so it appears correctly in the legend.
 103,13,54,"title='Distribution of Connecticut Systems by Year',",Sets the Plotly graph title displayed above the chart.
-104,14,3,state_code = 'LA',Stores Louisiana's state/agency code in a variable so it can be used to filter the data.
-105,14,4,state_name = 'Louisiana',Stores the full state name so it can be inserted into the graph title.
+104,14,3,state_code = 'AR',Stores Louisiana's state/agency code in a variable so it can be used to filter the data.
+105,14,4,state_name = 'Arkansas',Stores the full state name so it can be inserted into the graph title.
 106,14,20,state_data = TLC_data[TLC_data['Primacy Agency Code'] == state_code].copy(),Creates a DataFrame for the selected state by filtering rows where the agency code matches state_code. The .copy() helps prevent unwanted changes to TLC_data.
 107,14,23,"state_data = state_data.dropna(subset=['Population Served Count', 'Year'])","Removes rows from the selected state's data if population count or year is missing, so the graph uses complete records."
 108,14,27,small_system_data = state_data[state_data['Population Served Count'] < 500],Filters state_data to keep only smaller systems with Population Served Count < 500.
