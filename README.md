@@ -1,4 +1,4 @@
-# CIVI_202_PROJECT_5
+# CIVIE_202_PROJECT_5
 ## Data Analyzing the Safe Drinking Water Information System database violations in five different states in five different EPA regions
 ## Project Overview
 This project aims to extract and clean the data from the Safe Drinking Water Information System database and analyze the differences between small and large water systems.
